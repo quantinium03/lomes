@@ -159,6 +159,8 @@ async function refreshAnimeDatabase() {
         }
       }
     }
+
+    res.status(200).json({ message: "Anime database refreshed successfully!" });
   } catch (err) {
     console.log("Error refreshing the anime database", err);
   }

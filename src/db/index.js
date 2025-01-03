@@ -202,7 +202,7 @@ function createAnimeEpisode(db) {
   });
 }
 
-/* function createSettingsTable(db) {
+function createSettingsTable(db) {
   return new Promise((resolve, reject) => {
     const sql = `
     CREATE TABLE IF NOT EXISTS settings (
@@ -214,11 +214,11 @@ function createAnimeEpisode(db) {
       tvShowDirPath TEXT,
       animeDirPath TEXT,
       port INTEGER DEFAULT '6969' NOT NULL,
-       
+      
     );
     `;
   })
-} */
+}
 
 function initializeDatabase() {
   return new Promise((resolve, reject) => {

@@ -136,7 +136,7 @@ async function addTvShowSeasonToDatabase(tvShowData) {
   }
 }
 
-async function refreshTvShowDatabase() {
+async function refreshTvShowDatabase(req, res) {
   try {
     const files = await fs.readdir(TVSHOW_DIR);
     for (let show of files) {
@@ -149,14 +149,14 @@ async function refreshTvShowDatabase() {
           await addTvShowDatabase(tvShowData);
           console.log(`${tvShowName} data successfully added`);
         } catch (err) {
-          console.error('Failed to add data to the TV database', err.message);
+          console.error("Failed to add data to the TV database", err.message);
         }
 
         try {
           await addTvShowSeasonToDatabase(tvShowData);
           console.log(`${tvShowName} seasons data successfully added`);
         } catch (err) {
-          console.error('Failed to add season data to the TV database', err.message);
+          console.error("Failed to add season data to the TV database", err.message);
         }
       }
 
@@ -170,11 +170,8 @@ async function refreshTvShowDatabase() {
           );
 
           for (let episode of episodes) {
-            if (
-              episode.startsWith('Episode') ||
-              episode.startsWith('episode')
-            ) {
-              const episodeNo = episode.substring(8, episode.lastIndexOf('.'));
+            if (episode.startsWith("Episode") || episode.startsWith("episode")) {
+              const episodeNo = episode.substring(8, episode.lastIndexOf("."));
               console.log("Episode No: ", episodeNo);
 
               const tvShowId = tvShowData.id;
@@ -200,7 +197,7 @@ async function refreshTvShowDatabase() {
                     );
                   } catch (err) {
                     console.error(
-                      'Failed to add episode data to the database',
+                      "Failed to add episode data to the database",
                       err.message
                     );
                   }
@@ -211,8 +208,11 @@ async function refreshTvShowDatabase() {
         }
       }
     }
+
+    res.status(200).json({ message: "TV Show database refreshed successfully!" });
   } catch (err) {
-    console.error('Error refreshing the database: ', err.message);
+    console.error("Error refreshing the database: ", err.message);
+    res.status(500).json({ error: "Error refreshing the TV Show database." });
   }
 }
 
